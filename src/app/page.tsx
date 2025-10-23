@@ -1,5 +1,7 @@
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
+import styled from "styled-components";
 
 export default function Home() {
   return (
@@ -60,7 +62,18 @@ export default function Home() {
             Documentation
           </a>
         </div>
+        <Button>Nestor Vargas</Button>
       </main>
     </div>
   );
 }
+const Button = styled.button`
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: "#FFFFF";
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: ${({ theme }) => theme.font.family};
+  font-size: ${({ theme }) => theme.font.size};
+  cursor: pointer;
+`;
