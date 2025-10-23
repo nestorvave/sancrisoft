@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${({ theme }) => theme.font.size};
     background-color: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme }) => theme.colors.text};
+	padding: 0;
   }
 
   a {
