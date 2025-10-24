@@ -1,6 +1,7 @@
 export interface IOptions {
   label: string;
   value: string;
+  img?: string;
 }
 
 export interface ISelect {
@@ -17,4 +18,6 @@ export interface ISelect {
     >
   ) => void;
   value: string;
+  combined?: boolean;
+  showValueInsteadOfLabel?: boolean;
 }

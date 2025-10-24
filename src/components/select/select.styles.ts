@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const SelectContainer = styled.main`
   width: 100%;
-  height: 2rem;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   opacity: 1;
-  border-radius: 0.5rem;
-  border: 1px solid #e1e3e6;
   background-color: #ffffff;
+  position: relative;
 `;
 
 export const LabelInput = styled.label`
@@ -18,15 +18,23 @@ export const LabelInput = styled.label`
   vertical-align: middle;
 `;
 
-export const SelectHeader = styled.div`
+export const SelectHeader = styled.div<{ $combined?: boolean }>`
   width: 100%;
-  height: 100%;
+  height: 2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  box-sizing: border-box;
+  border: 1px solid #e1e3e6;
+  border-radius: ${({ $combined }) =>
+    $combined ? "0.5rem 0 0 0.5rem" : "0.5rem"};
+
+  ${({ $combined }) =>
+    $combined &&
+    `
+    border-right: none;
+  `}
 `;
 
 export const SelectedValue = styled.span<{ $isPlaceholder: boolean }>`
@@ -49,18 +57,46 @@ export const OptionsList = styled.ul`
   background-color: ${({ theme }) => theme.colors.white};
   max-height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
-export const SingleOption = styled.li`
+export const Option = styled.li`
   font-weight: 400;
   font-size: 1rem;
-  line-height: 0.8rem;
+  line-height: 0.9rem;
+  width: 100%;
   color: #000000;
   padding: 0.7rem 1rem;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover,
   &[aria-selected="true"] {
-	background-color: #f0f0f0;
+    background-color: #f0f0f0;
   }
-`;	
+`;
+
+export const OptionImgWrapper = styled.div`
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    border-radius: 0.25rem;
+    object-fit: contain;
+  }
+`;
+
+export const OptionBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  span {
+    width: 100%;
+  }
+`;

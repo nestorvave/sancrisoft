@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const StepperContainer = styled.section`
   display: flex;
-  width: 25%;
+  width: 18%;
   height: 10rem;
   gap: 1.2rem;
+
 `;
 
 export const StepperSection = styled.section`

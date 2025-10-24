@@ -2,7 +2,8 @@
 import styled from "styled-components";
 import { Stepper } from "./components/stepper/stepper.component";
 import { FormContainer } from "./components/form-container/form-container.component";
-import { BusinessStructure } from "./components/steps/business-structure.component";
+import { ContactPerson } from "./components/steps/contact-person.component";
+import { ReviewSubmit } from "./components/steps/review-submit.component";
 
 export default function CompanyLayout({
   children,
@@ -13,7 +14,7 @@ export default function CompanyLayout({
     <LayoutMain>
       <Stepper />
       <FormContainer>
-        <BusinessStructure />{" "}
+        <ReviewSubmit  />
       </FormContainer>
       {children}
     </LayoutMain>
@@ -21,9 +22,8 @@ export default function CompanyLayout({
 }
 
 const LayoutMain = styled.main`
-  padding: 2rem 0 0 2rem;
+  padding: 2rem 0 0 4rem;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 1rem;
 `;

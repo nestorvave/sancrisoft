@@ -27,10 +27,10 @@ export const FormContainer = ({ children }: { children: React.ReactNode }) => {
   return (
     <FormBox>
       {children}
-      <Alert
+   {/*    <Alert
         message="Thanks for submitting your company! We’ll be in touch shortly."
         type="error"
-      />
+      /> */}
 
       <Button
         label="Continue"
@@ -38,10 +38,10 @@ export const FormContainer = ({ children }: { children: React.ReactNode }) => {
         onClick={() => console.log("Next")}
         icon={<DefaultIcon />}
       />
-      <Alert
+   {/*    <Alert
         message="Thanks for submitting your company! We’ll be in touch shortly."
         type="error"
-      />
+      /> */}
     </FormBox>
   );
 };

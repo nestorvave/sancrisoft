@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import {
   SelectContainer,
   SelectHeader,
   SelectedValue,
   OptionsList,
-  SingleOption,
+  Option,
   LabelInput,
+  OptionImgWrapper,
+  OptionBox,
 } from "./select.styles";
-import { IOptions, ISelect } from "./select.interface";
+import { ISelect } from "./select.interface";
 
-const CaretIcon = ({ isOpen }: { isOpen: boolean }) => (
+const ArrowIcon = ({ isOpen }: { isOpen: boolean }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -37,20 +40,26 @@ export const Select = ({
   label,
   id,
   name,
+  combined,
+  showValueInsteadOfLabel,
 }: ISelect) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [selectedValue, setSelectedValue] = useState(value || "");
-  const [displayedText, setDisplayedText] = useState("");
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const selectRef = useRef<HTMLDivElement>(null);
+  const [displayedOption, setDisplayedOption] = useState<{
+    label: string;
+    value: string;
+    img?: string;
+  } | null>(null);
 
-  const handleOptionClick = (option: IOptions) => {
-    setSelectedValue(option.value);
+  const handleOptionClick = (itemValue: string) => {
+    setSelectedValue(itemValue);
     setIsOpen(false);
     const event = {
       target: {
         name: name,
-        value: option.value,
+        value: itemValue,
       },
     } as React.ChangeEvent<HTMLInputElement>;
     if (onChange) {
@@ -59,12 +68,12 @@ export const Select = ({
   };
 
   useEffect(() => {
-    const displayLabel = selectedValue
-      ? options.find((opt) => opt.value === selectedValue)?.label || placeholder
-      : placeholder;
-    setDisplayedText(displayLabel);
-    setIsPlaceholder(!selectedValue);
-  }, [selectedValue]);
+    const found = options.find((opt) => opt.value === selectedValue);
+    if (found) {
+      setDisplayedOption(found);
+      setIsPlaceholder(false);
+    }
+  }, [selectedValue, options]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
@@ -85,6 +94,7 @@ export const Select = ({
     <SelectContainer ref={selectRef}>
       {label && <LabelInput htmlFor={id}>{label}</LabelInput>}
       <SelectHeader
+        $combined={combined}
         onClick={() => setIsOpen(!isOpen)}
         tabIndex={0}
         role="combobox"
@@ -94,23 +104,50 @@ export const Select = ({
         id={id}
       >
         <SelectedValue $isPlaceholder={isPlaceholder}>
-          {displayedText}
+          {displayedOption && !isPlaceholder ? (
+            <OptionBox>
+              {displayedOption.img && (
+                <OptionImgWrapper>
+                  <Image
+                    src={displayedOption.img}
+                    alt={displayedOption.label}
+                    width={18}
+                    height={18}
+                  />
+                </OptionImgWrapper>
+              )}
+              <span>
+                {showValueInsteadOfLabel
+                  ? displayedOption.value
+                  : displayedOption.label}
+              </span>
+            </OptionBox>
+          ) : (
+            placeholder
+          )}
         </SelectedValue>
-        <CaretIcon isOpen={isOpen} />
+        <ArrowIcon isOpen={isOpen} />
       </SelectHeader>
 
       {isOpen && (
         <OptionsList id="select-list" role="listbox">
-          {options.map((option) => (
-            <SingleOption
-              key={option.value}
-              onClick={() => handleOptionClick(option)}
+          {options.map(({ value, label, img }, indx) => (
+            <Option
+              key={`${indx}-${value}`}
+              onClick={() => handleOptionClick(value)}
               role="option"
-              aria-selected={selectedValue === option.value}
+              aria-selected={selectedValue === value}
               tabIndex={-1}
             >
-              {option.label}
-            </SingleOption>
+              <OptionBox>
+                {img && (
+                  <OptionImgWrapper>
+                    <Image src={img} alt={label} width={18} height={18} />
+                  </OptionImgWrapper>
+                )}
+                <span>{showValueInsteadOfLabel ? value : label}</span>
+              </OptionBox>
+            </Option>
           ))}
         </OptionsList>
       )}
