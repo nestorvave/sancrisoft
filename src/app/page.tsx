@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useCountStore } from "@/store/index.store";
 import styled from "styled-components";
 

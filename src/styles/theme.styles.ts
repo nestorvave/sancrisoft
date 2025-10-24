@@ -4,9 +4,10 @@ export const theme = {
     primaryDark: "#0051a3",
     secondary: "#f5f5f5",
     text: "#222222",
+    white: "#ffffff",
   },
   font: {
-    family: "'Inter', sans-serif",
+    family: "Inter, sans-serif",
     size: "16px",
   },
   breakpoints: {
