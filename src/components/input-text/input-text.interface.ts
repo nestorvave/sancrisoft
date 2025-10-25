@@ -11,7 +11,7 @@ export interface ITextInput {
   onClick?: () => void;
   onDoubleClick?: () => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  pattern?: string;
+  pattern?: RegExp;
   placeholder?: string;
   type: "text" | "textarea" | "password";
   value: string;
@@ -20,7 +20,8 @@ export interface ITextInput {
   disabled?: boolean;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   combined?: boolean;
-  inputMode?:
+  customError?: string;
+  inputMode:
     | "none"
     | "text"
     | "tel"

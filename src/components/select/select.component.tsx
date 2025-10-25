@@ -43,8 +43,8 @@ export const Select = ({
   combined,
   showValueInsteadOfLabel,
 }: ISelect) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [selectedValue, setSelectedValue] = useState(value || "");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(value);
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const selectRef = useRef<HTMLDivElement>(null);
   const [displayedOption, setDisplayedOption] = useState<{
@@ -68,12 +68,20 @@ export const Select = ({
   };
 
   useEffect(() => {
-    const found = options.find((opt) => opt.value === selectedValue);
+    if (!value) {
+      setDisplayedOption(null);
+      setIsPlaceholder(true);
+      return;
+    }
+    const found = options.find((opt) => opt.value === selectedValue || opt.value === value);
     if (found) {
       setDisplayedOption(found);
       setIsPlaceholder(false);
+    } else {
+      setDisplayedOption(null);
+      setIsPlaceholder(true);
     }
-  }, [selectedValue, options]);
+  }, [selectedValue, value]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
@@ -89,6 +97,8 @@ export const Select = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  
 
   return (
     <SelectContainer ref={selectRef}>

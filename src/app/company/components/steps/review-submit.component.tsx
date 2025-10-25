@@ -1,49 +1,68 @@
+import { useFormStore } from "@/store/index.store";
 import styled from "styled-components";
 
-export const ReviewSubmit = () => {
+export const ReviewSubmit = ({ form }: any) => {
+  const {
+    name,
+    type,
+    line1,
+    line2,
+    city,
+    state,
+    zip,
+    firstName,
+    lastName,
+    email,
+    phone,
+    areaCode,
+  } = form;
+  const { goToStep } = useFormStore();
+
+
+
   return (
     <Wrapper>
       <Section>
         <HeaderRow>
           <SectionTitle>Business structure</SectionTitle>
-          <EditButton>Edit</EditButton>
+          <EditButton onClick={() => goToStep("1")}>Edit</EditButton>
         </HeaderRow>
 
         <InfoRow>
           <Label>Name</Label>
-          <Value>John Doe</Value>
+          <Value>{name}</Value>
         </InfoRow>
 
         <InfoRow>
           <Label>Type</Label>
-          <Value>Individual</Value>
+          <Value>{type}</Value>
         </InfoRow>
 
         <InfoRow>
           <Label>Address</Label>
-          <Value>123 Main Street Suite 123 Tampa, FL 33626</Value>
+          <Value>{`${line1} ${line2} ${city}, ${state} ${zip}`}</Value>
         </InfoRow>
       </Section>
 
       <Section>
         <HeaderRow>
           <SectionTitle>Contact person</SectionTitle>
-          <EditButton>Edit</EditButton>
+          <EditButton onClick={() => goToStep("2")}>Edit</EditButton>
         </HeaderRow>
 
         <InfoRow>
           <Label>Name</Label>
-          <Value>John Doe</Value>
+          <Value>{`${firstName} ${lastName}`}</Value>
         </InfoRow>
 
         <InfoRow>
           <Label>Email</Label>
-          <Value>john.doe@example.com</Value>
+          <Value>{email}</Value>
         </InfoRow>
 
         <InfoRow>
           <Label>Phone</Label>
-          <Value>+1 (555) 555-5555</Value>
+          <Value>{`${areaCode} ${phone}`}</Value>
         </InfoRow>
       </Section>
     </Wrapper>
@@ -86,12 +105,7 @@ const EditButton = styled.span`
   text-underline-offset: 2px;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-
-  &:hover {
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  }
 `;
-
 
 const InfoRow = styled.div`
   display: flex;

@@ -20,14 +20,14 @@ export const StepperSection = styled.section`
   padding: 0.4rem 0.2rem;
 `;
 
-export const StepDiv = styled.div`
+export const StepDiv = styled.div<{ $status: "current" | "completed" | "in progress" }>`
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 100%;
-  background-color: #4a3aff;
+  background-color:${({ $status }) => ($status === "current" ? "#4a3aff" : $status === "completed" ? "#4a3aff" : "#ffffff")};
   font-weight: 500;
   font-size: 0.8rem;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ $status }) => ($status === "current" ? "#ffffff" : $status === "completed" ? "#ffffff" : "#000000")};
   display: flex;
   justify-content: center;
   align-items: center;

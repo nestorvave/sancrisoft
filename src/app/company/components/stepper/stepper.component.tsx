@@ -6,8 +6,10 @@ import {
   StepperLabel,
 } from "./stepper.styles";
 import { IStepperProps } from "./interfaces/stepper.interface";
+import { useFormStore } from "@/store/index.store";
 
 export const Stepper = () => {
+  const { form } = useFormStore();
   const steps: IStepperProps[] = [
     {
       status: "in progress",
@@ -30,8 +32,17 @@ export const Stepper = () => {
     <StepperContainer>
       <StepperSection>
         {steps.map((step: IStepperProps, index: number) => (
-          <StepDiv key={index}>
-            {step.status !== "completed" ? step.step : ""}
+          <StepDiv
+            key={index}
+            $status={
+              Number(form.step) === Number(step.step)
+                ? "current"
+                : Number(step.step) < Number(form.step)
+                ? "completed"
+                : "in progress"
+            }
+          >
+            {Number(form.step) >= Number(step.step) ? Number(step.step) : "palomita"}
           </StepDiv>
         ))}
       </StepperSection>

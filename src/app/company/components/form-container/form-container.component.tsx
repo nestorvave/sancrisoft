@@ -1,6 +1,7 @@
 import { Alert } from "@/components/alert/alert.component";
 import { Button } from "@/components/button/button.component";
 import styled from "styled-components";
+import { useCompanyForm } from "../../hooks/useCompanyForm";
 const DefaultIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -23,11 +24,17 @@ const DefaultIcon = () => (
   </svg>
 );
 
-export const FormContainer = ({ children }: { children: React.ReactNode }) => {
+export const FormContainer = ({
+  children,
+  handleNext,
+}: {
+  children: React.ReactNode;
+  handleNext: () => void;
+}) => {
   return (
     <FormBox>
       {children}
-   {/*    <Alert
+      {/*    <Alert
         message="Thanks for submitting your company! We’ll be in touch shortly."
         type="error"
       /> */}
@@ -35,10 +42,10 @@ export const FormContainer = ({ children }: { children: React.ReactNode }) => {
       <Button
         label="Continue"
         id="next"
-        onClick={() => console.log("Next")}
+        onClick={handleNext}
         icon={<DefaultIcon />}
       />
-   {/*    <Alert
+      {/*    <Alert
         message="Thanks for submitting your company! We’ll be in touch shortly."
         type="error"
       /> */}

@@ -3,22 +3,60 @@ import { Select } from "@/components/select/select.component";
 import { PHONES } from "@/constants/phones.constants";
 import styled from "styled-components";
 
-export const ContactPerson = () => {
+export const ContactPerson = ({
+  onChange,
+  errors,
+  form,
+  validateField,
+}: any) => {
   return (
     <>
       <DivFullName>
-        <InputText labelText="Name" placeholderText="First name" />
-        <InputText labelText="Last name" placeholderText="Last name" />
+        <InputText
+          label="Name"
+          placeholder="First name"
+          id="firstName"
+          name="firstName"
+          onChange={onChange}
+          value={form.firstName}
+          type="text"
+          inputMode="text"
+          customError={errors.firstName}
+          onBlur={validateField}
+        />
+        <InputText
+          label="Last name"
+          placeholder="Last name"
+          id="lastName"
+          name="lastName"
+          onChange={onChange}
+          value={form.lastName}
+          type="text"
+          inputMode="text"
+          customError={errors.lastName}
+          onBlur={validateField}
+        />
       </DivFullName>
-      <InputText labelText="Email" placeholderText="Email" />
+      <InputText
+        label="Email"
+        placeholder="Email"
+        id="email"
+        name="email"
+        onChange={onChange}
+        value={form.email}
+        type="text"
+        inputMode="email"
+        customError={errors.email}
+        onBlur={validateField}
+      />
       <DivContact>
         <DivCountry>
           <Select
             options={PHONES}
-            id="phone"
-            name="phone"
-            onChange={(e) => console.log(e)}
-            value=""
+            id="areaCode"
+            name="areaCode"
+            onChange={onChange}
+            value={form.areaCode}
             combined
             label="Phone"
             showValueInsteadOfLabel
@@ -27,8 +65,15 @@ export const ContactPerson = () => {
         <DivPhone>
           <InputText
             combined
-            placeholderText="(555) 555-5555"
-            labelText="Phone"
+            placeholder="(555) 555-5555"
+            label="Phone"
+            id="phone"
+            name="phone"
+            onChange={onChange}
+            value={form.phone}
+            type="text"
+            inputMode="numeric"
+            onBlur={validateField}
           />
         </DivPhone>
       </DivContact>
@@ -42,6 +87,7 @@ const DivContact = styled.div`
 
 const DivFullName = styled.div`
   display: flex;
+  gap: 0.4rem;
 `;
 
 const DivCountry = styled.div`
