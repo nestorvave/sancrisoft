@@ -3,11 +3,12 @@ import styled from "styled-components";
 
 export const NavBar = styled.nav`
   width: 100%;
-  height: 80px;
+  height: 5rem;
   display: flex;
   align-items: center;
   padding: 0 4rem;
   border-bottom: 1px solid #e0e0e0;
+  gap: 1.5rem;
 `;
 
 export const Name = styled.h1`

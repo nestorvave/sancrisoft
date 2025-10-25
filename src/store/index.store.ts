@@ -16,6 +16,7 @@ export interface Form {
     phone: string;
     step: "1" | "2" | "3";
     areaCode: string;
+    status: "success" | "error" | "In progress" | null;
   };
 }
 
@@ -27,6 +28,7 @@ interface Actions {
   ) => void;
   clearForm: () => void;
   goToStep: (step: "1" | "2" | "3") => void;
+  updateStatus: (status: "success" | "error" | "In progress" | null) => void;
 }
 
 const INITIAL_STATE: Form["form"] = {
@@ -43,6 +45,7 @@ const INITIAL_STATE: Form["form"] = {
   phone: "",
   areaCode: "",
   step: "1",
+  status: null,
 };
 
 export const useFormStore = create<Form & Actions>()(
@@ -59,6 +62,7 @@ export const useFormStore = create<Form & Actions>()(
       },
       clearForm: () => set(() => ({ form: { ...INITIAL_STATE } })),
       goToStep: (step) => set((state) => ({ form: { ...state.form, step } })),
+      updateStatus: (status) => set((state) => ({ form: { ...state.form, status } })),
     }),
     { name: "form-store" }
   )

@@ -38,10 +38,10 @@ export const ReviewSubmit = ({ form }: any) => {
           <Value>{type}</Value>
         </InfoRow>
 
-        <InfoRow>
+        <InfoRowAddress>
           <Label>Address</Label>
           <Value>{`${line1} ${line2} ${city}, ${state} ${zip}`}</Value>
-        </InfoRow>
+        </InfoRowAddress>
       </Section>
 
       <Section>
@@ -70,7 +70,7 @@ export const ReviewSubmit = ({ form }: any) => {
 };
 
 const Wrapper = styled.div`
-  width: 78%;
+  width: 100%;
 `;
 
 const Section = styled.section`
@@ -109,8 +109,16 @@ const EditButton = styled.span`
 
 const InfoRow = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+`;
+const InfoRowAddress = styled.div`
+  display: flex;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
 `;
 

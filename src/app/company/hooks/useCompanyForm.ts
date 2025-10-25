@@ -1,18 +1,27 @@
 import { useFormStore } from "@/store/index.store";
-import { isEmail, isEmpty } from "@/utils/validators";
+import { formatPhone, isEmail, isEmpty } from "@/utils/validators";
 import { useState } from "react";
 
 export const useCompanyForm = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const { form, updateForm } = useFormStore();
+  const { form, updateForm, updateStatus } = useFormStore();
   const onChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    if (errors[e.target.name])
-      setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
-    updateForm(e);
+    const { name, value } = e.target;
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+
+    let formattedValue = value;
+
+    if (name === "phone") {
+      formattedValue = formatPhone(value);
+    }
+
+    updateForm({
+      target: { name, value: formattedValue },
+    } as React.ChangeEvent<HTMLInputElement>);
   };
 
   const validateField = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,9 +62,13 @@ export const useCompanyForm = () => {
     const newErrors = validateStep1();
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
+
     updateForm({
       target: { name: "step", value: String(Number(form.step) + 1) },
     } as React.ChangeEvent<HTMLInputElement>);
+    if (Number(form.step) === 2 || Number(form.step) === 1) {
+      updateStatus("In progress");
+    }
   };
 
   return { form, onChange, errors, handleNext, validateField };

@@ -21,3 +21,15 @@ export const isEmail = (email: string) => {
     return true;
   }
 };
+
+export const formatPhone = (value: string) => {
+  const numbers = value.replace(/\D/g, "");
+  if (numbers.length === 0) return "";
+  const part1 = numbers.substring(0, 3);
+  const part2 = numbers.substring(3, 6);
+  const part3 = numbers.substring(6, 10);
+
+  if (numbers.length <= 3) return `(${part1}`;
+  if (numbers.length <= 6) return `(${part1}) ${part2}`;
+  return `(${part1}) ${part2}-${part3}`;
+};
