@@ -16,16 +16,21 @@ export const ReviewSubmit = ({ form }: any) => {
     phone,
     areaCode,
   } = form;
-  const { goToStep } = useFormStore();
-
-
+  const { goToStep, updateStatus } = useFormStore();
 
   return (
     <Wrapper>
       <Section>
         <HeaderRow>
           <SectionTitle>Business structure</SectionTitle>
-          <EditButton onClick={() => goToStep("1")}>Edit</EditButton>
+          <EditButton
+            onClick={() => {
+              goToStep("1");
+              updateStatus("In progress", "");
+            }}
+          >
+            Edit
+          </EditButton>
         </HeaderRow>
 
         <InfoRow>
@@ -47,7 +52,14 @@ export const ReviewSubmit = ({ form }: any) => {
       <Section>
         <HeaderRow>
           <SectionTitle>Contact person</SectionTitle>
-          <EditButton onClick={() => goToStep("2")}>Edit</EditButton>
+          <EditButton
+            onClick={() => {
+              goToStep("2");
+              updateStatus("In progress", "");
+            }}
+          >
+            Edit
+          </EditButton>
         </HeaderRow>
 
         <InfoRow>

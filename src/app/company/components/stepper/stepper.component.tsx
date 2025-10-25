@@ -21,7 +21,7 @@ export const CheckIcon = () => (
 );
 
 export const Stepper = () => {
-  const { form, goToStep } = useFormStore();
+  const { form, goToStep, updateStatus } = useFormStore();
 
   const steps: IStepperProps[] = [
     {
@@ -48,19 +48,24 @@ export const Stepper = () => {
           <StepDiv
             $canGoBack={Number(step.step) < Number(form.step)}
             onClick={() => {
-              if (Number(step.step) > Number(form.step)) return;
+              if (Number(step.step) > Number(form.step) || form.status === "success") return;
               goToStep(step.step);
+              updateStatus("In progress", "");
             }}
             key={index}
             $status={
-              Number(form.step) === Number(step.step)
+              form.status === "success"
+                ? "completed"
+                : Number(form.step) === Number(step.step)
                 ? "current"
                 : Number(step.step) < Number(form.step)
                 ? "completed"
                 : "in progress"
             }
           >
-            {Number(step.step) === Number(form.step) ? (
+            {form.status === "success" ? (
+              <CheckIcon />
+            ) : Number(step.step) === Number(form.step) ? (
               step.step
             ) : Number(step.step) <= Number(form.step) ? (
               <CheckIcon />

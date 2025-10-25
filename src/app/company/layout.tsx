@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import styled from "styled-components";
 import { Stepper } from "./components/stepper/stepper.component";
 import { FormContainer } from "./components/form-container/form-container.component";

@@ -82,7 +82,7 @@ export const InputText = ({
       {!isValid && (
         <ErrorContainer>
           <WarningIcon />
-          <span>{customError}</span>
+          <span>{customError || "Invalid input"}</span>
         </ErrorContainer>
       )}
     </InputWrapper>

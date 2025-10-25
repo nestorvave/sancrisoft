@@ -12,15 +12,16 @@ export const Alert = ({ message, type }: IAlert) => {
 const AlertContainer = styled.div<{ $type: "error" | "warning" | "success" }>`
   width: 100%;
   height: 4rem;
-  background-color: #f0f0f0;
+  background-color: ${(props) =>
+    props.$type === "error" ? "#FEF0F0" : "#EBF5EB"};
   border-radius: 0.5rem;
   padding: 1.5rem 2rem;
-  border: 1px solid #ef4444;
-  color: #ef4444;
-  line-height: 1.3rem;
-  font-size: 1rem;
+  border: 1px solid
+    ${(props) => (props.$type === "error" ? "#ef4444" : "#008000")};
+  color: ${(props) => (props.$type === "error" ? "#ef4444" : "#008000")};
+  font-size: 0.85rem;
   font-weight: 400;
   display: flex;
   align-items: center;
-  margin: 0rem 0;
 `;
+

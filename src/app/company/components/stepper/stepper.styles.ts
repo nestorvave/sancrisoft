@@ -23,7 +23,8 @@ export const StepDiv = styled.div<{
   $status: "current" | "completed" | "in progress";
   $canGoBack: boolean;
 }>`
-  cursor: ${({ $canGoBack }) => ($canGoBack ? "pointer" : "default")};
+  cursor: ${({ $canGoBack, $status }) =>
+    $status ? "event-none" : $canGoBack ? "pointer" : "default"};
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 100%;

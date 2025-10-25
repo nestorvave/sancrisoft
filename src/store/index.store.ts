@@ -2,22 +2,21 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface Form {
-  form: {
-    name: string;
-    type: string;
-    line1: string;
-    line2: string;
-    city: string;
-    state: string;
-    zip: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    step: "1" | "2" | "3";
-    areaCode: string;
-    status: "success" | "error" | "In progress" | null;
-  };
+  name: string;
+  type: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  zip: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  step: "1" | "2" | "3";
+  areaCode: string;
+  status: "success" | "error" | "In progress" | null;
+  statusMessage: string;
 }
 
 interface Actions {
@@ -28,10 +27,13 @@ interface Actions {
   ) => void;
   clearForm: () => void;
   goToStep: (step: "1" | "2" | "3") => void;
-  updateStatus: (status: "success" | "error" | "In progress" | null) => void;
+  updateStatus: (
+    status: "success" | "error" | "In progress" | null,
+    message?: string
+  ) => void;
 }
 
-const INITIAL_STATE: Form["form"] = {
+const INITIAL_STATE: Form = {
   name: "",
   type: "",
   line1: "",
@@ -46,23 +48,41 @@ const INITIAL_STATE: Form["form"] = {
   areaCode: "",
   step: "1",
   status: null,
+  statusMessage: "",
 };
 
-export const useFormStore = create<Form & Actions>()(
+interface FormStore {
+  form: Form;
+  updateForm: Actions["updateForm"];
+  clearForm: Actions["clearForm"];
+  goToStep: Actions["goToStep"];
+  updateStatus: Actions["updateStatus"];
+}
+
+export const useFormStore = create<FormStore>()(
   persist(
     (set) => ({
       form: { ...INITIAL_STATE },
 
       updateForm: (e) => {
         const { name, value } = e.target;
-        if (!name) return;
         set((state) => ({
           form: { ...state.form, [name]: value },
         }));
       },
-      clearForm: () => set(() => ({ form: { ...INITIAL_STATE } })),
-      goToStep: (step) => set((state) => ({ form: { ...state.form, step } })),
-      updateStatus: (status) => set((state) => ({ form: { ...state.form, status } })),
+      clearForm: () =>
+        set(() => ({
+          form: { ...INITIAL_STATE },
+        })),
+      goToStep: (step) =>
+        set((state) => ({
+          form: { ...state.form, step },
+        })),
+
+      updateStatus: (status, message) =>
+        set((state) => ({
+          form: { ...state.form, status, statusMessage: message || "" },
+        })),
     }),
     { name: "form-store" }
   )

@@ -1,75 +1,120 @@
-import { useFormStore } from "@/store/index.store";
+import { useFormCase } from "@/data/use-cases/useFormCase";
+import { useFormStore, Form } from "@/store/index.store";
 import { formatPhone, isEmail, isEmpty } from "@/utils/validators";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { transformData } from "../utils/transform-data.utils";
+import { validateRequiredFields } from "../utils/form-validator.utils";
+
+interface FormErrors {
+  [key: string]: string;
+}
 
 export const useCompanyForm = () => {
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const { form, updateForm, updateStatus } = useFormStore();
-  const onChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+  const [errors, setErrors] = useState<FormErrors>({});
+  const { form, updateForm, updateStatus, clearForm } = useFormStore();
 
-    let formattedValue = value;
+  const onChange = useCallback(
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ): void => {
+      const { name, value } = e.target;
+      if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
 
-    if (name === "phone") {
-      formattedValue = formatPhone(value);
+      const formattedValue = name === "phone" ? formatPhone(value) : value;
+
+      updateForm({
+        target: { name, value: formattedValue },
+      } as React.ChangeEvent<HTMLInputElement>);
+    },
+    [errors]
+  );
+
+  const validateField = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const { name, value } = e.target;
+      let error = "";
+      if (isEmpty(value)) error = "This field is required";
+      if (name === "zip" && value.length !== 5)
+        error = "Zip code must be 5 digits";
+      setErrors((prev) => ({ ...prev, [name]: error }));
+    },
+    []
+  );
+
+  const validateStep = useCallback((): FormErrors => {
+    let newErrors: FormErrors = {};
+    const required = "This field is required";
+
+    if (form.step === "1") {
+      newErrors = {
+        ...newErrors,
+        ...validateRequiredFields<Form>(
+          form,
+          ["name", "type", "line1", "city", "state", "zip"],
+          required
+        ),
+      };
+
+      if (form.zip && form.zip.length !== 5)
+        newErrors.zip = "Zip code must be 5 digits";
     }
 
-    updateForm({
-      target: { name, value: formattedValue },
-    } as React.ChangeEvent<HTMLInputElement>);
-  };
+    if (form.step === "2") {
+      newErrors = {
+        ...newErrors,
+        ...validateRequiredFields<Form>(
+          form,
+          ["firstName", "lastName", "email", "phone", "areaCode"],
+          required
+        ),
+      };
 
-  const validateField = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let error = "";
-    const name = e.target.name;
-    const value = e.target.value;
-    if (!value.trim()) error = "This field is required";
-    if (name === "zip" && value.length !== 5)
-      error = "Zip code must be 5 digits";
-    setErrors((prev) => ({ ...prev, [name]: error }));
-  };
-
-  const validateStep1 = () => {
-    const errors: { [key: string]: string } = {};
-    const requiredMessage = "This field is required";
-    if (Number(form.step) === 1) {
-      if (isEmpty(form.name)) errors.name = requiredMessage;
-      if (isEmpty(form.type)) errors.type = requiredMessage;
-      if (isEmpty(form.line1)) errors.line1 = requiredMessage;
-      if (isEmpty(form.city)) errors.city = requiredMessage;
-      if (isEmpty(form.state)) errors.state = requiredMessage;
-      if (isEmpty(form.zip)) errors.zip = requiredMessage;
-      if (form.zip.length !== 5) errors.zip = "Zip code must be 5 digits";
-    }
-    if (Number(form.step) === 2) {
-      if (isEmpty(form.firstName)) errors.firstName = requiredMessage;
-      if (isEmpty(form.lastName)) errors.lastName = requiredMessage;
-      if (isEmpty(form.email)) errors.email = requiredMessage;
-      if (isEmpty(form.phone)) errors.phone = requiredMessage;
-      if (isEmpty(form.areaCode)) errors.areaCode = requiredMessage;
-      if (!isEmail(form.email)) errors.email = "Invalid email format";
+      if (!isEmpty(form.email) && !isEmail(form.email))
+        newErrors.email = "Invalid email format";
     }
 
-    return errors;
-  };
+    return newErrors;
+  }, [form]);
 
-  const handleNext = () => {
-    const newErrors = validateStep1();
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+  const submitForm = async (): Promise<void> => {
+    try {
+      const response = await useFormCase(transformData(form));
 
-    updateForm({
-      target: { name: "step", value: String(Number(form.step) + 1) },
-    } as React.ChangeEvent<HTMLInputElement>);
-    if (Number(form.step) === 2 || Number(form.step) === 1) {
-      updateStatus("In progress");
+      if (response.status === "error") {
+        updateStatus("error", response.message);
+      } else {
+        updateStatus("success", response.message);
+      }
+    } catch {
+      updateStatus("error", "Error submitting company form");
     }
   };
+
+  const handleNext = useCallback(() => {
+    if (form.status === "success") {
+      clearForm();
+      return;
+    }
+    const validationErrors = validateStep();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
+
+    const currentStep = Number(form.step);
+
+    if (currentStep === 1 || currentStep === 2) {
+      updateStatus("In progress", "");
+      updateForm({
+        target: { name: "step", value: String(currentStep + 1) },
+      } as React.ChangeEvent<HTMLInputElement>);
+      return;
+    }
+
+    if (currentStep === 3) {
+      submitForm();
+    }
+  }, [form, validateStep, submitForm]);
 
   return { form, onChange, errors, handleNext, validateField };
 };

@@ -2,6 +2,7 @@ import { Alert } from "@/components/alert/alert.component";
 import { Button } from "@/components/button/button.component";
 import styled from "styled-components";
 import { useCompanyForm } from "../../hooks/useCompanyForm";
+import { useFormStore } from "@/store/index.store";
 const DefaultIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -31,24 +32,31 @@ export const FormContainer = ({
   children: React.ReactNode;
   handleNext: () => void;
 }) => {
+  const { form } = useFormStore();
+
+  const btnText =
+    form.step === "3" && form.status === "success"
+      ? "Start over"
+      : form.step === "3"
+      ? "Confirm & Submit"
+      : "Continue";
+
   return (
     <FormBox>
       {children}
-      {/*    <Alert
-        message="Thanks for submitting your company! We’ll be in touch shortly."
-        type="error"
-      /> */}
+      {form.status === "success" && (
+        <Alert message={form.statusMessage} type="success" />
+      )}
 
       <Button
-        label="Continue"
+        label={btnText}
         id="next"
         onClick={handleNext}
         icon={<DefaultIcon />}
       />
-      {/*    <Alert
-        message="Thanks for submitting your company! We’ll be in touch shortly."
-        type="error"
-      /> */}
+      {form.status === "error" && (
+        <Alert message={form.statusMessage} type={form.status} />
+      )}
     </FormBox>
   );
 };
