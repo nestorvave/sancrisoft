@@ -1,8 +1,7 @@
 import { Alert } from "@/components/alert/alert.component";
 import { Button } from "@/components/button/button.component";
-import styled from "styled-components";
-import { useCompanyForm } from "../../hooks/useCompanyForm";
 import { useFormStore } from "@/store/index.store";
+import { FormBox } from "./form-container.styles";
 const DefaultIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -61,10 +60,3 @@ export const FormContainer = ({
   );
 };
 
-const FormBox = styled.section`
-  width: 25rem;
-  min-height: 31rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.6rem;
-`;

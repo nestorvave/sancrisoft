@@ -3,7 +3,7 @@ import { useFormStore, Form } from "@/store/index.store";
 import { formatPhone, isEmail, isEmpty } from "@/utils/validators";
 import { useCallback, useState } from "react";
 import { transformData } from "../utils/transform-data.utils";
-import { validateRequiredFields } from "../utils/form-validator.utils";
+import { validateRequiredFields } from "../utils/form-validators.utils";
 
 interface FormErrors {
   [key: string]: string;

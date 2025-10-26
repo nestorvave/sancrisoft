@@ -5,7 +5,7 @@ import {
   StepperLabels,
   StepperLabel,
 } from "./stepper.styles";
-import { IStepperProps } from "./interfaces/stepper.interface";
+import { IStepperProps } from "./stepper.interface";
 import { useFormStore } from "@/store/index.store";
 
 export const CheckIcon = () => (

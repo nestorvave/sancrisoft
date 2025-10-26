@@ -46,6 +46,7 @@ export const StepDiv = styled.div<{
   justify-content: center;
   align-items: center;
 `;
+
 export const StepperLabels = styled.section`
   display: flex;
   flex-direction: column;
