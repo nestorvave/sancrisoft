@@ -17,6 +17,7 @@ export interface Form {
   areaCode: string;
   status: "success" | "error" | "In progress" | null;
   statusMessage: string;
+  isSubmit: boolean;
 }
 
 interface Actions {
@@ -31,6 +32,7 @@ interface Actions {
     status: "success" | "error" | "In progress" | null,
     message?: string
   ) => void;
+  updateIsSubmit: (isSubmit: boolean) => void;
 }
 
 const INITIAL_STATE: Form = {
@@ -49,6 +51,7 @@ const INITIAL_STATE: Form = {
   step: "1",
   status: null,
   statusMessage: "",
+  isSubmit: false,
 };
 
 interface FormStore {
@@ -57,13 +60,13 @@ interface FormStore {
   clearForm: Actions["clearForm"];
   goToStep: Actions["goToStep"];
   updateStatus: Actions["updateStatus"];
+  updateIsSubmit: Actions["updateIsSubmit"];
 }
 
 export const useFormStore = create<FormStore>()(
   persist(
     (set) => ({
       form: { ...INITIAL_STATE },
-
       updateForm: (e) => {
         const { name, value } = e.target;
         set((state) => ({
@@ -78,10 +81,13 @@ export const useFormStore = create<FormStore>()(
         set((state) => ({
           form: { ...state.form, step },
         })),
-
       updateStatus: (status, message) =>
         set((state) => ({
           form: { ...state.form, status, statusMessage: message || "" },
+        })),
+      updateIsSubmit: (isSubmit: boolean) =>
+        set((state) => ({
+          form: { ...state.form, isSubmit },
         })),
     }),
     { name: "form-store" }

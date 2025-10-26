@@ -11,7 +11,8 @@ interface FormErrors {
 
 export const useCompanyForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
-  const { form, updateForm, updateStatus, clearForm } = useFormStore();
+  const { form, updateForm, updateStatus, clearForm, updateIsSubmit } =
+    useFormStore();
 
   const onChange = useCallback(
     (
@@ -79,6 +80,7 @@ export const useCompanyForm = () => {
   }, [form]);
 
   const submitForm = async (): Promise<void> => {
+    updateIsSubmit(true);
     try {
       const response = await useFormCase(transformData(form));
 
@@ -89,6 +91,8 @@ export const useCompanyForm = () => {
       }
     } catch {
       updateStatus("error", "Error submitting company form");
+    } finally {
+      updateIsSubmit(false);
     }
   };
 

@@ -52,6 +52,7 @@ export const FormContainer = ({
         id="next"
         onClick={handleNext}
         icon={<DefaultIcon />}
+        loading={form.isSubmit}
       />
       {form.status === "error" && (
         <Alert message={form.statusMessage} type={form.status} />
