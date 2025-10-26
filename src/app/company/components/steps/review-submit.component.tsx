@@ -116,7 +116,7 @@ const SectionTitle = styled.h2`
   color: #404d61;
   width: 11rem;
 `;
-const EditButton = styled.span`
+const EditButton = styled.button`
   font-weight: 500;
   font-size: 0.9rem;
   line-height: 1.5rem;
@@ -128,6 +128,9 @@ const EditButton = styled.span`
   text-underline-offset: 2px;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  &:focus {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
 `;
 
 const InfoRow = styled.div`

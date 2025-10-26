@@ -36,7 +36,10 @@ export const FormContainer = ({
         icon={<RightArrow />}
         loading={Boolean(form.isSubmit)}
         onKeyDown={(e) => {
-          if (e.key === "Enter") handleNext();
+          if (e.key === "Enter") {
+            e.preventDefault();
+            handleNext();
+          }
         }}
       />
       {form.status === "error" && (

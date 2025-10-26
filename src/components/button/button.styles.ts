@@ -28,6 +28,11 @@ export const StyledButton = styled.button<{ $disabled?: boolean }>`
     filter: brightness(0.9);
   }
 
+  &:focus {
+    opacity: 0.9;
+
+  }
+
   .spinner {
     margin-left: 0.5rem;
     border: 2px solid #fff;

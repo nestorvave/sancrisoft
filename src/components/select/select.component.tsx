@@ -13,8 +13,6 @@ import {
 import { ISelect } from "./select.interface";
 import { Arrow } from "@/components/icons";
 
-
-
 export const Select = ({
   options = [],
   placeholder = "Select an option",
@@ -29,6 +27,7 @@ export const Select = ({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
   const [isPlaceholder, setIsPlaceholder] = useState(true);
+  const optionRefs = useRef<Array<HTMLLIElement | null>>([]);
   const selectRef = useRef<HTMLDivElement>(null);
   const [displayedOption, setDisplayedOption] = useState<{
     label: string;
@@ -47,7 +46,36 @@ export const Select = ({
     } as React.ChangeEvent<HTMLInputElement>;
     if (onChange) {
       onChange(event);
-    } 
+    }
+  };
+
+  const handleArrowDown = (index: number): void => {
+    const next = (index + 1) % options.length;
+    optionRefs.current[next]?.focus();
+  };
+
+  const handleArrowUp = (index: number): void => {
+    const prev = (index - 1 + options.length) % options.length;
+    optionRefs.current[prev]?.focus();
+  };
+
+  const handleKeyDown = (
+    e: React.KeyboardEvent,
+    index: number,
+    value: string
+  ): void => {
+    const keyActions: Record<string, () => void> = {
+      ArrowDown: () => handleArrowDown(index),
+      ArrowUp: () => handleArrowUp(index),
+      Enter: () => handleOptionClick(value),
+      Escape: () => setIsOpen(false),
+    };
+
+    const action = keyActions[e.key];
+    if (action) {
+      e.preventDefault();
+      action();
+    }
   };
 
   useEffect(() => {
@@ -56,7 +84,9 @@ export const Select = ({
       setIsPlaceholder(true);
       return;
     }
-    const found = options.find((opt) => opt.value === selectedValue || opt.value === value);
+    const found = options.find(
+      (opt) => opt.value === selectedValue || opt.value === value
+    );
     if (found) {
       setDisplayedOption(found);
       setIsPlaceholder(false);
@@ -81,7 +111,11 @@ export const Select = ({
     };
   }, []);
 
-  
+  useEffect(() => {
+    if (isOpen && optionRefs.current.length > 0) {
+      optionRefs.current[0]?.focus();
+    }
+  }, [isOpen]);
 
   return (
     <SelectContainer ref={selectRef}>
@@ -95,10 +129,16 @@ export const Select = ({
         aria-haspopup="listbox"
         aria-controls="select-list"
         id={id}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === "ArrowDown") {
+            e.preventDefault();
+            setIsOpen(true);
+          }
+        }}
       >
         <SelectedValue $isPlaceholder={isPlaceholder}>
           {displayedOption && !isPlaceholder ? (
-            <OptionBox>
+            <OptionBox tabIndex={0}>
               {displayedOption.img && (
                 <OptionImgWrapper>
                   <Image
@@ -130,6 +170,10 @@ export const Select = ({
               onClick={() => handleOptionClick(value)}
               role="option"
               aria-selected={selectedValue === value}
+              onKeyDown={(e) => handleKeyDown(e, indx, value)}
+              ref={(el) => {
+                optionRefs.current[indx] = el;
+              }}
               tabIndex={-1}
             >
               <OptionBox>

@@ -16,9 +16,9 @@ export const Button = ({
       type="button"
       disabled={disabled || loading}
       aria-busy={loading}
-      aria-disabled={disabled}
       onClick={onClick}
       $disabled={disabled || loading}
+      onKeyDown={onKeyDown}
     >
       {loading ? (
         <>
