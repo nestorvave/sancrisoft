@@ -13,7 +13,7 @@ export interface ITextInput {
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   pattern?: RegExp;
   placeholder?: string;
-  type: "text" | "textarea" | "password";
+  type: "text" | "textarea" | "password" | "numeric";
   value: string;
   rows?: number;
   error?: string;

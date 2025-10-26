@@ -41,7 +41,7 @@ export default function CompanyLayout({
   );
 }
 
-const LayoutMain = styled.main`
+const LayoutMain = styled.section`
   padding: 2rem 0 0 4rem;
   display: flex;
   justify-content: flex-start;

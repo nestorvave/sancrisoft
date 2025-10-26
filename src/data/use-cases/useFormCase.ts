@@ -1,6 +1,6 @@
 import { callApi } from "../api/api-config";
 
-interface Address {
+interface IAddress {
   line1: string;
   line2: string;
   city: string;
@@ -8,25 +8,25 @@ interface Address {
   zip: string;
 }
 
-interface Contact {
+interface IContact {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
 }
 
-export interface Company {
+export interface ICompany {
   name: string;
   type: string;
-  address: Address;
-  contact: Contact;
+  address: IAddress;
+  contact: IContact;
 }
 export interface IResponse {
   status: string;
   message: string;
 }
 
-export async function useFormCase(data: Company) {
+export async function useFormCase(data: ICompany) {
   try {
     const path = `/company`;
     const response = await callApi<IResponse>(path, {

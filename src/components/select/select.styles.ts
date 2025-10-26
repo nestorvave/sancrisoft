@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SelectContainer = styled.main`
+export const SelectContainer = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;

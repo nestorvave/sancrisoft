@@ -5,4 +5,5 @@ export interface IButton {
   id: string;
   disabled?: boolean;
   loading?: boolean;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 }

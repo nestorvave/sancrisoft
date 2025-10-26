@@ -78,7 +78,7 @@ export const BusinessStructure = ({ onChange, errors, form, validateField }: any
             name="zip"
             onChange={onChange}
             value={zip}
-            type="text"
+            type="numeric"
             pattern={/^\d+$/}
             inputMode="numeric"
             customError={errors.zip}
@@ -90,10 +90,11 @@ export const BusinessStructure = ({ onChange, errors, form, validateField }: any
   );
 };
 
-const DivAddress = styled.div`
+const DivAddress = styled.fieldset`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  border: none;
 `;
 
 const DivStatePostal = styled.div`

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormBox = styled.section`
+export const FormBox = styled.form`
   width: 25rem;
   min-height: 31rem;
   display: flex;

@@ -7,7 +7,7 @@ export const StepperContainer = styled.section`
   gap: 1.2rem;
 `;
 
-export const StepperSection = styled.section`
+export const StepperSection = styled.ol`
   width: 2rem;
   height: 100%;
   display: flex;
@@ -19,7 +19,7 @@ export const StepperSection = styled.section`
   padding: 0.4rem 0.2rem;
 `;
 
-export const StepDiv = styled.div<{
+export const Step = styled.li<{
   $status: "current" | "completed" | "in progress";
   $canGoBack: boolean;
 }>`

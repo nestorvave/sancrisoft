@@ -1,8 +1,7 @@
-import { Form } from "@/store/index.store";
-import { Company } from "@/data/use-cases/useFormCase";
+import { IForm } from "@/store/form.interface";
+import { ICompany } from "@/data/use-cases/useFormCase";
 
-export const transformData = ( data : Form): Company => {
-
+export const transformData = (data: IForm): ICompany => {
   return {
     name: data.name,
     type: data.type,

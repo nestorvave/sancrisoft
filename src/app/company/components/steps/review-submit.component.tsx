@@ -1,4 +1,4 @@
-import { useFormStore } from "@/store/index.store";
+import { useFormStore } from "@/store/form.store";
 import styled from "styled-components";
 
 export const ReviewSubmit = ({ form }: any) => {
@@ -16,7 +16,12 @@ export const ReviewSubmit = ({ form }: any) => {
     phone,
     areaCode,
   } = form;
-  const { goToStep, updateStatus } = useFormStore();
+  const { updateForm, updateStatus } = useFormStore();
+
+  const handleEdit = (step: "1" | "2") => {
+    updateForm({ target: { name: "step", value: step } });
+    updateStatus("In progress", "");
+  };
 
   return (
     <Wrapper>
@@ -24,9 +29,12 @@ export const ReviewSubmit = ({ form }: any) => {
         <HeaderRow>
           <SectionTitle>Business structure</SectionTitle>
           <EditButton
-            onClick={() => {
-              goToStep("1");
-              updateStatus("In progress", "");
+            onClick={() => handleEdit("1")}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleEdit("1");
+              }
             }}
           >
             Edit
@@ -53,9 +61,12 @@ export const ReviewSubmit = ({ form }: any) => {
         <HeaderRow>
           <SectionTitle>Contact person</SectionTitle>
           <EditButton
-            onClick={() => {
-              goToStep("2");
-              updateStatus("In progress", "");
+            onClick={() => handleEdit("2")}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleEdit("2");
+              }
             }}
           >
             Edit

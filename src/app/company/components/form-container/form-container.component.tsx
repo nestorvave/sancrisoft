@@ -1,44 +1,26 @@
 import { Alert } from "@/components/alert/alert.component";
 import { Button } from "@/components/button/button.component";
-import { useFormStore } from "@/store/index.store";
+import { useFormStore } from "@/store/form.store";
 import { FormBox } from "./form-container.styles";
-const DefaultIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={{
-      marginLeft: "5px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-);
+import { RightArrow } from "@/components/icons";
+
+interface IFormContainerProps {
+  children: React.ReactNode;
+  handleNext: () => void;
+}
 
 export const FormContainer = ({
   children,
   handleNext,
-}: {
-  children: React.ReactNode;
-  handleNext: () => void;
-}) => {
+}: IFormContainerProps) => {
   const { form } = useFormStore();
+  const currentStep = Number(form.step);
 
-  const btnText =
-    form.step === "3" && form.status === "success"
-      ? "Start over"
-      : form.step === "3"
-      ? "Confirm & Submit"
-      : "Continue";
+  const btnTxt = (): "Start over" | "Confirm & Submit" | "Continue" => {
+    if (currentStep === 3 && form.status === "success") return "Start over";
+    if (currentStep === 3) return "Confirm & Submit";
+    return "Continue";
+  };
 
   return (
     <FormBox>
@@ -48,11 +30,14 @@ export const FormContainer = ({
       )}
 
       <Button
-        label={btnText}
+        label={btnTxt()}
         id="next"
         onClick={handleNext}
-        icon={<DefaultIcon />}
-        loading={form.isSubmit}
+        icon={<RightArrow />}
+        loading={Boolean(form.isSubmit)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleNext();
+        }}
       />
       {form.status === "error" && (
         <Alert message={form.statusMessage} type={form.status} />
@@ -60,4 +45,3 @@ export const FormContainer = ({
     </FormBox>
   );
 };
-

@@ -1,9 +1,10 @@
 import { useFormCase } from "@/data/use-cases/useFormCase";
-import { useFormStore, Form } from "@/store/index.store";
+import { useFormStore } from "@/store/form.store";
 import { formatPhone, isEmail, isEmpty } from "@/utils/validators";
 import { useCallback, useState } from "react";
 import { transformData } from "../utils/transform-data.utils";
 import { validateRequiredFields } from "../utils/form-validators.utils";
+import { IForm } from "@/store/form.interface";
 
 interface FormErrors {
   [key: string]: string;
@@ -11,8 +12,7 @@ interface FormErrors {
 
 export const useCompanyForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
-  const { form, updateForm, updateStatus, clearForm, updateIsSubmit } =
-    useFormStore();
+  const { form, updateForm, updateStatus, clearForm } = useFormStore();
 
   const onChange = useCallback(
     (
@@ -27,7 +27,7 @@ export const useCompanyForm = () => {
 
       updateForm({
         target: { name, value: formattedValue },
-      } as React.ChangeEvent<HTMLInputElement>);
+      });
     },
     [errors]
   );
@@ -51,7 +51,7 @@ export const useCompanyForm = () => {
     if (form.step === "1") {
       newErrors = {
         ...newErrors,
-        ...validateRequiredFields<Form>(
+        ...validateRequiredFields<IForm>(
           form,
           ["name", "type", "line1", "city", "state", "zip"],
           required
@@ -65,7 +65,7 @@ export const useCompanyForm = () => {
     if (form.step === "2") {
       newErrors = {
         ...newErrors,
-        ...validateRequiredFields<Form>(
+        ...validateRequiredFields<IForm>(
           form,
           ["firstName", "lastName", "email", "phone", "areaCode"],
           required
@@ -80,7 +80,7 @@ export const useCompanyForm = () => {
   }, [form]);
 
   const submitForm = async (): Promise<void> => {
-    updateIsSubmit(true);
+    updateForm({ target: { name: "isSubmit", value: true } });
     try {
       const response = await useFormCase(transformData(form));
 
@@ -92,7 +92,7 @@ export const useCompanyForm = () => {
     } catch {
       updateStatus("error", "Error submitting company form");
     } finally {
-      updateIsSubmit(false);
+      updateForm({ target: { name: "isSubmit", value: false } });
     }
   };
 
@@ -111,7 +111,7 @@ export const useCompanyForm = () => {
       updateStatus("In progress", "");
       updateForm({
         target: { name: "step", value: String(currentStep + 1) },
-      } as React.ChangeEvent<HTMLInputElement>);
+      });
       return;
     }
 
