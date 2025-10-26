@@ -46,4 +46,17 @@ const LayoutMain = styled.section`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 2rem 0 0 1rem;
+    width: 100%;
+    gap: 0rem;
+    justify-content: space-between;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    gap: 0.5rem;
+    padding: 2rem 0 0 0;
+  }
 `;
+

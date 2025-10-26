@@ -115,6 +115,14 @@ const SectionTitle = styled.h2`
   line-height: 1.5rem;
   color: #404d61;
   width: 11rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    font-size: 0.9rem;
+  }
 `;
 const EditButton = styled.button`
   font-weight: 500;
@@ -130,6 +138,14 @@ const EditButton = styled.button`
   cursor: pointer;
   &:focus {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    font-size: 0.7rem;
   }
 `;
 
@@ -154,6 +170,14 @@ const Label = styled.p`
   line-height: 2.5rem;
   color: #757d8a;
   min-width: 120px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Value = styled.p`
@@ -162,4 +186,12 @@ const Value = styled.p`
   color: #404d61;
   flex: 1;
   font-weight: 500;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    font-size: 0.9rem;
+  }
 `;

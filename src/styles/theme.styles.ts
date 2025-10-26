@@ -11,7 +11,10 @@ export const theme = {
     size: "16px",
   },
   breakpoints: {
+    smallMobile: "380px",
     mobile: "600px",
     tablet: "900px",
+    laptop: "1200px",
+    desktop: "1536px",
   },
 };

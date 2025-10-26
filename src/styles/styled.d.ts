@@ -15,6 +15,7 @@ declare module "styled-components" {
       size: string;
     };
     breakpoints: {
+      smallMobile: string;
       mobile: string;
       tablet: string;
     };

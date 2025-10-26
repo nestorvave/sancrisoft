@@ -6,4 +6,8 @@ export const FormBox = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0 1rem;
+  }
 `;

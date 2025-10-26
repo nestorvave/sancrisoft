@@ -9,6 +9,10 @@ export const NavBar = styled.nav`
   padding: 0 4rem;
   border-bottom: 1px solid #e0e0e0;
   gap: 1.5rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0 1rem;
+  }
 `;
 
 export const Name = styled.h1`

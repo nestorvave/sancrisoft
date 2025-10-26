@@ -5,6 +5,14 @@ export const StepperContainer = styled.section`
   width: 18%;
   height: 10rem;
   gap: 1.2rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    width: 25%;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
+    display: none;
+  }
 `;
 
 export const StepperSection = styled.ol`
@@ -50,11 +58,13 @@ export const Step = styled.li<{
 export const StepperLabels = styled.section`
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
   justify-content: space-between;
   height: 100%;
   padding: 0.4rem 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 export const StepperLabel = styled.p`
