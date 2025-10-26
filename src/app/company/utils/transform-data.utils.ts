@@ -1,5 +1,6 @@
+import { ICompany } from "@/domain/models/form.model";
 import { IForm } from "@/store/form.interface";
-import { ICompany } from "@/data/use-cases/useFormCase";
+
 
 export const transformData = (data: IForm): ICompany => {
   return {

@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { ITextInput } from "./input-text.interface";
-import { ContainerInput, LabelInput, Input, InputWrapper, ErrorContainer } from "./input-text.styles";
+import {
+  ContainerInput,
+  LabelInput,
+  Input,
+  InputWrapper,
+  ErrorContainer,
+} from "./input-text.styles";
 import { WarningIcon } from "@/components/icons";
-
 
 export const InputText = ({
   label,
@@ -14,13 +19,10 @@ export const InputText = ({
   name,
   ariaLabel,
   pattern,
-  maxLength,
-  minLength,
   autoFocus,
   onKeyPress,
   disabled,
   onBlur,
-  onDoubleClick,
   onClick,
   onChange,
   value,
@@ -56,13 +58,10 @@ export const InputText = ({
           placeholder={placeholder}
           aria-label={ariaLabel}
           pattern={pattern?.toString() || ""}
-          maxLength={maxLength || 100}
-          minLength={minLength}
           autoFocus={autoFocus}
           onKeyDown={onKeyPress}
           disabled={disabled}
           onBlur={onBlur}
-          onDoubleClick={onDoubleClick}
           onClick={onClick}
           onChange={handleChange}
           value={value}

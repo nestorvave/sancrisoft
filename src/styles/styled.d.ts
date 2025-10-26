@@ -9,7 +9,7 @@ declare module "styled-components" {
       text: string;
       white: string;
     };
-    
+
     font: {
       family: string;
       size: string;

@@ -21,16 +21,15 @@ export const StyledButton = styled.button<{ $disabled?: boolean }>`
   transition: background-color 0.3s ease;
 
   &:hover {
-    filter: brightness(1.1);
+    opacity: 0.9;
   }
 
   &:active {
-    filter: brightness(0.9);
+    opacity: 0.8;
   }
 
   &:focus {
     opacity: 0.9;
-
   }
 
   .spinner {

@@ -46,7 +46,7 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <ThemeProviderWrapper>
             <header>
-              <Navbar />
+              <Navbar name="New Company" />
             </header>
             <main>{children}</main>
           </ThemeProviderWrapper>

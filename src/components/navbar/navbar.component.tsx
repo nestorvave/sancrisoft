@@ -1,10 +1,10 @@
 import { NavBar, Name } from "./navbar.styles";
 import { MiniAlert } from "./mini-alert.component";
 
-export const Navbar = () => {
+export const Navbar = ({ name }: { name: string }) => {
   return (
     <NavBar>
-      <Name>New Company</Name>
+      <Name>{name}</Name>
       <MiniAlert />
     </NavBar>
   );

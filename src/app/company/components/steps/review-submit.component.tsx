@@ -140,6 +140,11 @@ const EditButton = styled.button`
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   }
 
+  &:hover {
+    opacity: 0.8;
+    text-shadow: 0 0 4px rgba(74, 58, 255, 0.5);
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     font-size: 0.8rem;
   }

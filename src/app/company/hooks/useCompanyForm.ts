@@ -1,4 +1,4 @@
-import { useFormCase } from "@/data/use-cases/useFormCase";
+import { useFormCase } from "@/domain/use-cases/useFormCase.use-case";
 import { useFormStore } from "@/store/form.store";
 import { formatPhone, isEmail, isEmpty } from "@/utils/validators";
 import { useCallback, useState } from "react";

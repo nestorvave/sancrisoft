@@ -125,9 +125,11 @@ export const Select = ({
         onClick={() => setIsOpen(!isOpen)}
         tabIndex={0}
         role="combobox"
+        aria-label={label}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        aria-controls="select-list"
+        aria-controls={isOpen ? `${id}-list` : undefined}
+        aria-labelledby={id ? `${id}-label` : undefined}
         id={id}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === "ArrowDown") {

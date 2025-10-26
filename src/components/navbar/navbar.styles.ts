@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import styled from "styled-components";
 
 export const NavBar = styled.nav`
@@ -10,7 +10,7 @@ export const NavBar = styled.nav`
   border-bottom: 1px solid #e0e0e0;
   gap: 1.5rem;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (max-width: ${({ theme }) => theme?.breakpoints?.tablet}) {
     padding: 0 1rem;
   }
 `;

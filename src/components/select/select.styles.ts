@@ -54,7 +54,7 @@ export const OptionsList = styled.ul`
   z-index: 1000;
   border: 1px solid #e1e3e6;
   border-radius: 0.5rem;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme?.colors?.white || "#ffffff"};
   max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
