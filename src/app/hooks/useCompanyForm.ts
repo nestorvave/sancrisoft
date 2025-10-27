@@ -14,7 +14,7 @@ export const useCompanyForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const { form, updateForm, updateStatus, clearForm } = useFormStore();
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
-  const numericFields = ["phone", "zip", "areaCode"];
+  const numericFields = ["zip"];
 
   const onChange = useCallback(
     (
