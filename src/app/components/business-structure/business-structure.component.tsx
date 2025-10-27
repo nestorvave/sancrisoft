@@ -36,6 +36,7 @@ export const BusinessStructure = ({
         name="type"
         onChange={onChange}
         value={type}
+        customError={errors.type}
       />
       <DivAddress>
         <InputText
