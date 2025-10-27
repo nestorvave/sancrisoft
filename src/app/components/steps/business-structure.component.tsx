@@ -5,7 +5,13 @@ import { STATES } from "@/constants/states.constants";
 import styled from "styled-components";
 import { TYPES } from "@/constants/type.constants";
 
-export const BusinessStructure = ({ onChange, errors, form, validateField }: any) => {
+export const BusinessStructure = ({
+  onChange,
+  errors,
+  form,
+  validateField,
+  inputRefs,
+}: any) => {
   const { name, type, line1, line2, city, state, zip } = form;
 
   return (
@@ -21,6 +27,7 @@ export const BusinessStructure = ({ onChange, errors, form, validateField }: any
         inputMode="text"
         customError={errors.name}
         onBlur={validateField}
+        autoFocus
       />
       <Select
         options={TYPES}

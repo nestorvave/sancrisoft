@@ -23,6 +23,7 @@ export const ContactPerson = ({
           inputMode="text"
           customError={errors.firstName}
           onBlur={validateField}
+          autoFocus
         />
         <InputText
           label="Last name"

@@ -33,3 +33,14 @@ export const formatPhone = (value: string) => {
   if (numbers.length <= 6) return `(${part1}) ${part2}`;
   return `(${part1}) ${part2}-${part3}`;
 };
+
+export const validateNumericField = (
+  name: string,
+  value: string,
+  numericFields: string[]
+): string => {
+  if (numericFields.includes(name)) {
+    return !/^\d$/.test(value) ? "" : value;
+  }
+  return value;
+};

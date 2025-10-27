@@ -1,7 +1,7 @@
 import { useFormCase } from "@/domain/use-cases/useFormCase.use-case";
 import { useFormStore } from "@/store/form.store";
 import { formatPhone, isEmail, isEmpty } from "@/utils/validators";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { transformData } from "../utils/transform-data.utils";
 import { validateRequiredFields } from "../utils/form-validators.utils";
 import { IForm } from "@/store/form.interface";
@@ -13,6 +13,8 @@ interface FormErrors {
 export const useCompanyForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const { form, updateForm, updateStatus, clearForm } = useFormStore();
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const numericFields = ["phone", "zip", "areaCode"];
 
   const onChange = useCallback(
     (
@@ -21,6 +23,8 @@ export const useCompanyForm = () => {
       >
     ): void => {
       const { name, value } = e.target;
+      if (numericFields.includes(name) && !/^\d*$/.test(value)) return;
+
       if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
 
       const formattedValue = name === "phone" ? formatPhone(value) : value;
@@ -95,6 +99,15 @@ export const useCompanyForm = () => {
       updateForm({ target: { name: "isSubmit", value: false } });
     }
   };
+  const focusFirstError = (errors: Record<string, string>) => {
+    const firstErrorKey = Object.keys(errors).find((key) => errors[key]);
+    if (firstErrorKey) {
+      const el = document.getElementById(
+        firstErrorKey
+      ) as HTMLInputElement | null;
+      el?.focus();
+    }
+  };
 
   const handleNext = useCallback(() => {
     if (form.status === "success") {
@@ -103,8 +116,10 @@ export const useCompanyForm = () => {
     }
     const validationErrors = validateStep();
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length > 0) return;
-
+    if (Object.keys(validationErrors).length > 0) {
+      focusFirstError(validationErrors);
+      return;
+    }
     const currentStep = Number(form.step);
 
     if (currentStep === 1 || currentStep === 2) {
@@ -120,5 +135,5 @@ export const useCompanyForm = () => {
     }
   }, [form, validateStep, submitForm]);
 
-  return { form, onChange, errors, handleNext, validateField };
+  return { form, onChange, errors, handleNext, validateField, inputRefs };
 };

@@ -8,7 +8,7 @@ import { ReviewSubmit } from "./components/steps/review-submit.component";
 import { useCompanyForm } from "./hooks/useCompanyForm";
 
 export default function Form() {
-  const { form, onChange, errors, handleNext, validateField } =
+  const { form, onChange, errors, handleNext, validateField, inputRefs } =
     useCompanyForm();
   return (
     <LayoutMain>
@@ -20,6 +20,7 @@ export default function Form() {
             errors={errors}
             form={form}
             validateField={validateField}
+            inputRefs={inputRefs}
           />
         )}
         {form.step === "2" && (
@@ -28,6 +29,7 @@ export default function Form() {
             errors={errors}
             form={form}
             validateField={validateField}
+            inputRefs={inputRefs}
           />
         )}
         {form.step === "3" && <ReviewSubmit form={form} />}
