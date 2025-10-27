@@ -8,7 +8,6 @@ export const StepperContainer = styled.section`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 25%;
-
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -41,20 +40,20 @@ export const Step = styled.li<{
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 100%;
-  background-color: ${({ $status }) =>
+  background-color: ${({ $status, theme }) =>
     $status === "current"
       ? "#4a3aff"
       : $status === "completed"
       ? "#4ADE80"
-      : "#ffffff"};
+      : theme.colors.white};
   font-weight: 500;
   font-size: 0.8rem;
-  color: ${({ $status }) =>
+  color: ${({ $status, theme }) =>
     $status === "current"
-      ? "#ffffff"
+      ? theme.colors.white
       : $status === "completed"
-      ? "#ffffff"
-      : "#000000"};
+      ? theme.colors.white
+      : theme.colors.text};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +67,6 @@ export const StepperLabels = styled.section`
   height: 100%;
   padding: 0.4rem 0;
 
-  
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }

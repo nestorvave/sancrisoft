@@ -1,5 +1,5 @@
 export async function callApi<T>(
-  path: string,
+  path?: string,
   options?: {
     method?: "GET" | "POST" | "PUT" | "DELETE";
     body?: any;
@@ -7,7 +7,7 @@ export async function callApi<T>(
   }
 ): Promise<T> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${path}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${path || ""}`, {
       method: options?.method || "GET",
       headers: {
         "Content-Type": "application/json",

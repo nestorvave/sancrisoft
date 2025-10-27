@@ -5,6 +5,7 @@ export const theme = {
     secondary: "#f5f5f5",
     text: "#222222",
     white: "#ffffff",
+    error: "#ef4444",
   },
   font: {
     family: "Inter, sans-serif",

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const AlertContainer = styled.div<{ $type: "error" | "warning" | "success" }>`
+export const AlertContainer = styled.div<{
+  $type: "error" | "warning" | "success";
+}>`
   width: 100%;
   height: 4rem;
   background-color: ${(props) =>

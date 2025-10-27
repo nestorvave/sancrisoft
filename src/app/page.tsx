@@ -2,13 +2,13 @@
 import { styled } from "styled-components";
 import { Stepper } from "./components/stepper/stepper.component";
 import { FormContainer } from "./components/form-container/form-container.component";
-import { BusinessStructure } from "./components/steps/business-structure.component";
-import { ContactPerson } from "./components/steps/contact-person.component";
-import { ReviewSubmit } from "./components/steps/review-submit.component";
+import { BusinessStructure } from "./components/business-structure/business-structure.component";
+import { ContactPerson } from "./components/contact-person/contact-person.component";
+import { ReviewSubmit } from "./components/review-submit/review-submit.component";
 import { useCompanyForm } from "./hooks/useCompanyForm";
 
 export default function Form() {
-  const { form, onChange, errors, handleNext, validateField, inputRefs } =
+  const { form, onChange, errors, handleNext, validateField } =
     useCompanyForm();
   return (
     <LayoutMain>
@@ -20,7 +20,6 @@ export default function Form() {
             errors={errors}
             form={form}
             validateField={validateField}
-            inputRefs={inputRefs}
           />
         )}
         {form.step === "2" && (
@@ -29,7 +28,6 @@ export default function Form() {
             errors={errors}
             form={form}
             validateField={validateField}
-            inputRefs={inputRefs}
           />
         )}
         {form.step === "3" && <ReviewSubmit form={form} />}

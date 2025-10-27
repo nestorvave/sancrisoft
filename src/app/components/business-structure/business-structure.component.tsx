@@ -1,17 +1,16 @@
 import { InputText } from "@/components/input-text/input-text.component";
 import { Select } from "@/components/select/select.component";
 import { STATES } from "@/constants/states.constants";
-
-import styled from "styled-components";
 import { TYPES } from "@/constants/type.constants";
+import { DivStatePostal, DivAddress } from "./business-structure.styles";
+import { IBusinessStructure } from "./business.structure.interface";
 
 export const BusinessStructure = ({
   onChange,
   errors,
   form,
   validateField,
-  inputRefs,
-}: any) => {
+}: IBusinessStructure) => {
   const { name, type, line1, line2, city, state, zip } = form;
 
   return (
@@ -97,14 +96,3 @@ export const BusinessStructure = ({
   );
 };
 
-const DivAddress = styled.fieldset`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  border: none;
-`;
-
-const DivStatePostal = styled.div`
-  display: flex;
-  gap: 0.5rem;
-`;

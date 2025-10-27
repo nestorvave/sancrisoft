@@ -43,7 +43,6 @@ export const InputWrapper = styled.div`
 
 export const ErrorContainer = styled.div`
   display: flex;
-  font-family: "DM Sans";
   line-height: 1.3;
   align-items: center;
   font-weight: 400;

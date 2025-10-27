@@ -13,7 +13,6 @@ interface FormErrors {
 export const useCompanyForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const { form, updateForm, updateStatus, clearForm } = useFormStore();
-  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const numericFields = ["zip"];
 
   const onChange = useCallback(
@@ -78,6 +77,8 @@ export const useCompanyForm = () => {
 
       if (!isEmpty(form.email) && !isEmail(form.email))
         newErrors.email = "Invalid email format";
+
+      if (form.phone.length !== 14) newErrors.phone = "Phone must be 10 digits";
     }
 
     return newErrors;
@@ -135,5 +136,5 @@ export const useCompanyForm = () => {
     }
   }, [form, validateStep, submitForm]);
 
-  return { form, onChange, errors, handleNext, validateField, inputRefs };
+  return { form, onChange, errors, handleNext, validateField };
 };
