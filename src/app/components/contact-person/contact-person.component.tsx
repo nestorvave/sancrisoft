@@ -89,10 +89,10 @@ export const ContactPerson = ({
             />
           </DivPhone>
         </Row>
-        {errors.phone && (
+        {errors.phone || errors.areaCode && (
           <Error>
             <WarningIcon />
-            <span>{errors.phone}</span>
+            <span>{errors.phone || errors.areaCode}</span>
           </Error>
         )}
       </DivContact>
