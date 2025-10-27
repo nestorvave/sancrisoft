@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Tecnical Challenge
+
+This is a responsive micro web application that implements a multi-step company creation form, separating the application into Presentation, Domain, and Data layers.
+
+---
+
+## Technologies Used
+
+- **Next.js**  
+- **TypeScript**  
+- **Styled-components**  
+- **Zustand**  
+
+Additional project setup includes:
+
+- **`.env.template`** – Provides a template of all required environment variables for the project. This ensures that any developer can easily configure their local environment without exposing sensitive data.  
+- **`.nvmrc`** – Specifies the recommended Node.js version for the project. This ensures consistency across different development environments and CI/CD pipelines, avoiding version conflicts.  
+- **Component testing with Storybook** – All UI components have associated stories that allow developers to visually test and interact with each component in isolation. 
+
+
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Running the App
+```bash
+npm run dev
+```
+App will run at **http://localhost:3000**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run storybook
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run storybook
+```
+Stories will run at **http://localhost:6006**
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

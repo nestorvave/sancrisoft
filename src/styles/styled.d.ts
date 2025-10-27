@@ -7,12 +7,15 @@ declare module "styled-components" {
       primaryDark: string;
       secondary: string;
       text: string;
+      white: string;
     };
+
     font: {
       family: string;
       size: string;
     };
     breakpoints: {
+      smallMobile: string;
       mobile: string;
       tablet: string;
     };
