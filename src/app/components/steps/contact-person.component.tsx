@@ -93,6 +93,9 @@ const DivFullName = styled.div`
 
 const DivCountry = styled.div`
   width: 30%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    width: 40%;
+  }
 `;
 
 const DivPhone = styled.div`

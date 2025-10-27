@@ -8,6 +8,11 @@ export const StepperContainer = styled.section`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 25%;
+
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 10%;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
@@ -62,6 +67,8 @@ export const StepperLabels = styled.section`
   justify-content: space-between;
   height: 100%;
   padding: 0.4rem 0;
+
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }

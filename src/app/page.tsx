@@ -47,7 +47,6 @@ const LayoutMain = styled.section`
     padding: 2rem 0 0 1rem;
     width: 100%;
     gap: 0rem;
-    justify-content: space-between;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.smallMobile}) {
