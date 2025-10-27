@@ -100,3 +100,22 @@ export const OptionBox = styled.div`
     width: 100%;
   }
 `;
+
+
+export const SelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const ErrorContainer = styled.div`
+  display: flex;
+  font-family: "DM Sans";
+  line-height: 1.3;
+  align-items: center;
+  font-weight: 400;
+  gap: 0.25rem;
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+`;

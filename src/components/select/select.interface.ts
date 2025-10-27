@@ -20,4 +20,5 @@ export interface ISelect {
   value: string;
   combined?: boolean;
   showValueInsteadOfLabel?: boolean;
+  customError?: string;
 }

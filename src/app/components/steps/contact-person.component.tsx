@@ -61,6 +61,7 @@ export const ContactPerson = ({
             combined
             label="Phone"
             showValueInsteadOfLabel
+            customError={errors.areaCode || errors.phone}
           />
         </DivCountry>
         <DivPhone>
@@ -75,6 +76,7 @@ export const ContactPerson = ({
             type="text"
             inputMode="numeric"
             onBlur={validateField}
+            hiddenLabel
           />
         </DivPhone>
       </DivContact>

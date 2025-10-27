@@ -9,9 +9,11 @@ import {
   LabelInput,
   OptionImgWrapper,
   OptionBox,
+  SelectWrapper,
+  ErrorContainer,
 } from "./select.styles";
 import { ISelect } from "./select.interface";
-import { Arrow } from "@/components/icons";
+import { Arrow, WarningIcon } from "@/components/icons";
 
 export const Select = ({
   options = [],
@@ -23,7 +25,9 @@ export const Select = ({
   name,
   combined,
   showValueInsteadOfLabel,
+  customError,
 }: ISelect) => {
+  const [isValid, setIsValid] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
   const [isPlaceholder, setIsPlaceholder] = useState(true);
@@ -117,79 +121,95 @@ export const Select = ({
     }
   }, [isOpen]);
 
-  return (
-    <SelectContainer ref={selectRef}>
-      {label && <LabelInput htmlFor={id}>{label}</LabelInput>}
-      <SelectHeader
-        $combined={combined}
-        onClick={() => setIsOpen(!isOpen)}
-        tabIndex={0}
-        role="combobox"
-        aria-label={label}
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-        aria-controls={isOpen ? `${id}-list` : undefined}
-        aria-labelledby={id ? `${id}-label` : undefined}
-        id={id}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === "ArrowDown") {
-            e.preventDefault();
-            setIsOpen(true);
-          }
-        }}
-      >
-        <SelectedValue $isPlaceholder={isPlaceholder}>
-          {displayedOption && !isPlaceholder ? (
-            <OptionBox tabIndex={0}>
-              {displayedOption.img && (
-                <OptionImgWrapper>
-                  <Image
-                    src={displayedOption.img}
-                    alt={displayedOption.label}
-                    width={18}
-                    height={18}
-                  />
-                </OptionImgWrapper>
-              )}
-              <span>
-                {showValueInsteadOfLabel
-                  ? displayedOption.value
-                  : displayedOption.label}
-              </span>
-            </OptionBox>
-          ) : (
-            placeholder
-          )}
-        </SelectedValue>
-        <Arrow isOpen={isOpen} />
-      </SelectHeader>
+  useEffect(() => {
+    if (customError) {
+      setIsValid(false);
+      return;
+    }
+    setIsValid(true);
+  }, [customError]);
 
-      {isOpen && (
-        <OptionsList id="select-list" role="listbox">
-          {options.map(({ value, label, img }, indx) => (
-            <Option
-              key={`${indx}-${value}`}
-              onClick={() => handleOptionClick(value)}
-              role="option"
-              aria-selected={selectedValue === value}
-              onKeyDown={(e) => handleKeyDown(e, indx, value)}
-              ref={(el) => {
-                optionRefs.current[indx] = el;
-              }}
-              tabIndex={-1}
-            >
-              <OptionBox>
-                {img && (
+  return (
+    <SelectWrapper>
+      <SelectContainer ref={selectRef}>
+        {label && <LabelInput htmlFor={id}>{label}</LabelInput>}
+        <SelectHeader
+          $combined={combined}
+          onClick={() => setIsOpen(!isOpen)}
+          tabIndex={0}
+          role="combobox"
+          aria-label={label}
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-controls={isOpen ? `${id}-list` : undefined}
+          aria-labelledby={id ? `${id}-label` : undefined}
+          id={id}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === "ArrowDown") {
+              e.preventDefault();
+              setIsOpen(true);
+            }
+          }}
+        >
+          <SelectedValue $isPlaceholder={isPlaceholder}>
+            {displayedOption && !isPlaceholder ? (
+              <OptionBox tabIndex={0}>
+                {displayedOption.img && (
                   <OptionImgWrapper>
-                    <Image src={img} alt={label} width={18} height={18} />
+                    <Image
+                      src={displayedOption.img}
+                      alt={displayedOption.label}
+                      width={18}
+                      height={18}
+                    />
                   </OptionImgWrapper>
                 )}
-                <span>{showValueInsteadOfLabel ? value : label}</span>
+                <span>
+                  {showValueInsteadOfLabel
+                    ? displayedOption.value
+                    : displayedOption.label}
+                </span>
               </OptionBox>
-            </Option>
-          ))}
-        </OptionsList>
+            ) : (
+              placeholder
+            )}
+          </SelectedValue>
+          <Arrow isOpen={isOpen} />
+        </SelectHeader>
+
+        {isOpen && (
+          <OptionsList id="select-list" role="listbox">
+            {options.map(({ value, label, img }, indx) => (
+              <Option
+                key={`${indx}-${value}`}
+                onClick={() => handleOptionClick(value)}
+                role="option"
+                aria-selected={selectedValue === value}
+                onKeyDown={(e) => handleKeyDown(e, indx, value)}
+                ref={(el) => {
+                  optionRefs.current[indx] = el;
+                }}
+                tabIndex={-1}
+              >
+                <OptionBox>
+                  {img && (
+                    <OptionImgWrapper>
+                      <Image src={img} alt={label} width={18} height={18} />
+                    </OptionImgWrapper>
+                  )}
+                  <span>{showValueInsteadOfLabel ? value : label}</span>
+                </OptionBox>
+              </Option>
+            ))}
+          </OptionsList>
+        )}
+      </SelectContainer>
+      {!isValid && (
+        <ErrorContainer>
+          <WarningIcon />
+          <span>{customError || "Invalid input"}</span>
+        </ErrorContainer>
       )}
-    </SelectContainer>
+    </SelectWrapper>
   );
 };

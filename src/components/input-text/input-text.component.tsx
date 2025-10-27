@@ -27,6 +27,7 @@ export const InputText = ({
   onChange,
   value,
   customError,
+  hiddenLabel,
 }: ITextInput) => {
   const [isValid, setIsValid] = useState(true);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +48,7 @@ export const InputText = ({
   return (
     <InputWrapper>
       <ContainerInput>
-        {label && <LabelInput htmlFor={id}>{label}</LabelInput>}
+        {label && <LabelInput $hiddenLabel={hiddenLabel}  htmlFor={id}>{label}</LabelInput>}
 
         <Input
           $combined={combined}

@@ -17,6 +17,7 @@ export interface ITextInput {
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   combined?: boolean;
   customError?: string;
+  hiddenLabel?: boolean;
   inputMode:
     | "none"
     | "text"

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: "Create Company | Sancrisoft Challenge",
     description:
       "Multi-step company creation form built with Next.js, TypeScript, and styled-components.",
-    url: "",
+    url: "https://sancrisoft-zeta.vercel.app/",
     siteName: "Sancrisoft Challenge",
     locale: "en_US",
     type: "website",
